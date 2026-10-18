@@ -1,0 +1,54 @@
+appId: com.andirayka.smsautofillux
+name: SMS autofill on the emulator, every scenario in one run
+env:
+  HASH: ${HASH}
+---
+# One launch for the whole run. Relaunching the app mid-run drops the
+# emulator's adb transport on this setup, and the scenarios do not need it:
+# an SMS that Play services does not deliver leaves the listen window open.
+- launchApp:
+    stopApp: true
+
+# Control state: empty boxes, waiting.
+- assertVisible: 'Waiting for SMS…'
+- assertNotVisible: 'Code filled automatically'
+
+# The app reports the same hash as the independent computation.
+- tapOn: 'Prepared SMS'
+- assertVisible: 'Your demo code is 482913 ${HASH}'
+- tapOn: 'Hide'
+
+# Failure: the wrong hash must not fill.
+- runFlow:
+    file: expect-ignored.yaml
+    env:
+      TEXT: 'Your demo code is 482913 AAAAAAAAAAA'
+
+# Boundary: the right hash but no code must not fill.
+- runFlow:
+    file: expect-ignored.yaml
+    env:
+      TEXT: 'Hello from the demo ${HASH}'
+
+# Boundary: a longer digit run must not be taken as the code.
+- runFlow:
+    file: expect-ignored.yaml
+    env:
+      TEXT: 'Order 1234567 shipped ${HASH}'
+
+# Success, after three messages that must not fill: the window was still open
+# (or re-armed), so a correct SMS fills the code by itself.
+- runScript:
+    file: send-sms.js
+    env:
+      TEXT: 'Your demo code is 482913 ${HASH}'
+- extendedWaitUntil:
+    visible: 'Code filled automatically'
+    timeout: 30000
+- assertVisible: '4'
+- assertVisible: '8'
+- assertVisible: '2'
+- assertVisible: '9'
+- assertVisible: '1'
+- assertVisible: '3'
+- assertNotVisible: 'Waiting for SMS…'

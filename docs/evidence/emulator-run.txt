@@ -1,0 +1,36 @@
+Expected hash (from the signing keystore): pcwxu2zGm7J
+ > Flow SMS autofill on the emulator, every scenario in one run
+Launch app "com.andirayka.smsautofillux"... COMPLETED
+Assert that "Waiting for SMS…" is visible... COMPLETED
+Assert that "Code filled automatically" is not visible... COMPLETED
+Tap on "Prepared SMS"... COMPLETED
+Assert that "Your demo code is 482913 ${HASH}" is visible... COMPLETED
+Tap on "Hide"... COMPLETED
+  Assert that "Waiting for SMS…" is visible... COMPLETED
+  Run send-sms.js... COMPLETED
+  Run ${(function(){var t=Date.now();while(Date.now()-t<10000){}})()}... COMPLETED
+  Assert that "Code filled automatically" is not visible... COMPLETED
+  Assert that "Waiting for SMS…" is visible... COMPLETED
+Run expect-ignored.yaml... COMPLETED
+  Assert that "Waiting for SMS…" is visible... COMPLETED
+  Run send-sms.js... COMPLETED
+  Run ${(function(){var t=Date.now();while(Date.now()-t<10000){}})()}... COMPLETED
+  Assert that "Code filled automatically" is not visible... COMPLETED
+  Assert that "Waiting for SMS…" is visible... COMPLETED
+Run expect-ignored.yaml... COMPLETED
+  Assert that "Waiting for SMS…" is visible... COMPLETED
+  Run send-sms.js... COMPLETED
+  Run ${(function(){var t=Date.now();while(Date.now()-t<10000){}})()}... COMPLETED
+  Assert that "Code filled automatically" is not visible... COMPLETED
+  Assert that "Waiting for SMS…" is visible... COMPLETED
+Run expect-ignored.yaml... COMPLETED
+Run send-sms.js... COMPLETED
+Assert that "Code filled automatically" is visible... COMPLETED
+Assert that "4" is visible... COMPLETED
+Assert that "8" is visible... COMPLETED
+Assert that "2" is visible... COMPLETED
+Assert that "9" is visible... COMPLETED
+Assert that "1" is visible... COMPLETED
+Assert that "3" is visible... COMPLETED
+Assert that "Waiting for SMS…" is not visible... COMPLETED
+ALL EMULATOR CHECKS PASSED (attempt 1)

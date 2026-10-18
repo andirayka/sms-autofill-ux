@@ -1,0 +1,11 @@
+appId: com.andirayka.smsautofillux
+---
+- assertVisible: 'Waiting for SMS…'
+- runScript:
+    file: send-sms.js
+    env:
+      TEXT: ${TEXT}
+# Hold well past delivery, then check nothing filled.
+- evalScript: ${(function(){var t=Date.now();while(Date.now()-t<10000){}})()}
+- assertNotVisible: 'Code filled automatically'
+- assertVisible: 'Waiting for SMS…'
